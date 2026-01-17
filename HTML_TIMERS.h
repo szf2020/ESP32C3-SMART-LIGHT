@@ -34,9 +34,12 @@ const char TIMERCONFIG_START[] PROGMEM = R"=====(
  )=====";
                                                                         
  const char TIMER_GENERAL[] PROGMEM = R"=====(
-<center><table><tr><td style='width:180px;color:#e207fa;'><h1> TIMER {nr} </h1>
-<td style='width:40px;'>active?<td><input type='checkbox' name='ta' tActive>
+<H1 style='color:#e207fa;'>TIMER {nr} </h1>
+<center><table>
+<tr><td style='width:180px;'>active?<td><input type='checkbox' name='ta' tActive>
+<tr><td>level (max 8192)<td><input class ='inp3' type='number' name='lev' value="{lev}" min="10" max="8192">
 </table>
+
 <table>
 <tr><td>on:<td><input class='inp4' type='time' name='inw' value='{onX}' title='hh:mm'>
 <td><select name='zonattaan' class='sb1'>

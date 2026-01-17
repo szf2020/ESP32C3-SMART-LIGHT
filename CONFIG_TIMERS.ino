@@ -37,11 +37,14 @@ consoleOut("we are at zendPageRelevantTimers, tkeuze = " + String(tKeuze));
 void plaats_timerpage() 
 {
 // we moeten de timerpagina plaatsen 
+    consoleOut("timer page_replace");
     toSend.replace("<irame name>" , FPSTR(TIMER_GENERAL));  
     toSend.replace("{nr}" , String(tKeuze)); // vervang timer nummer
+        
     if(timerProp[tKeuze].Active) toSend.replace("tActive", "checked");
     // we put back "selected" for the option in the selectbox zonattaanwelke_1 2 3 4 or 5 
-    consoleOut("page_replace");
+    toSend.replace("{lev}" , String(timerProp[tKeuze].Level)); // vervang level
+    
     
     //toSend.replace(zonatt_replace(String(relToSunOn[tKeuze]), "zonattaan"), "selected"); 
     //toSend.replace(zonatt_replace(String(relToSunOff[tKeuze]), "zonattuit"), "selected"); 
@@ -171,11 +174,16 @@ void checkTimers() {
 }
 
 void lampOnNow(bool zend, bool check, int who) {
-
+      if(who > 19) // if switched by a timer we sould fade to timerProp[wie].Level
+      {   
+        uint8_t wie = who-20;
+        fade_pwm(timerProp[wie].Level);
+      } else {
+        fade_pwm(duty);
+        if(duty == 0) duty = backupDuty;
+      }
       switchonMoment = now();
-      if(duty == 0) duty = backupDuty; 
-        fade_pwm(duty); 
-        consoleOut("on: duty cycle set to " + String(duty));
+      consoleOut("on: duty cycle set to " + String(duty));
       lampState = 1;
       //digitalWrite(led_onb, LED_AAN);
       if( zend ) { sendMqttswitch(); }// mqtt switch state

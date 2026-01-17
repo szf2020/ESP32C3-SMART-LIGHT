@@ -81,7 +81,9 @@ void printStruct( String bestand ) {
       Serial.println("timerProp[" + String(timerNr) + "].of_hh = " + String(timerProp[timerNr].of_hh));
       Serial.println("timerProp[" + String(timerNr) + "].on_mm = " + String(timerProp[timerNr].on_mm));
       Serial.println("timerProp[" + String(timerNr) + "].of_mm = " + String(timerProp[timerNr].of_mm));  
+      Serial.println("timerProp[" + String(timerNr) + "].Level = " + String(timerProp[timerNr].Level));
       Serial.print("timerProp[" + String(timerNr) + "].dow = :");
+      
       for (int i = 0; i < 7; i++) {Serial.print(timerProp[timerNr].dow[i] ? '1' : '0');  }
       Serial.println("");
       Serial.println("****************************************");

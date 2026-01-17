@@ -67,7 +67,8 @@ void handleForms(AsyncWebServerRequest *request) {
           //form timers received
           lampState = 0; // prevent slow down
           if(request->hasParam("ta"))  timerProp[tKeuze].Active = true;  else timerProp[tKeuze].Active = false;
-          
+          timerProp[tKeuze].Level = request->getParam("lev")->value().toInt();
+         
          if (request->hasArg("inw")) {
             String t = request->arg("inw");  // "18:30"
             timerProp[tKeuze].on_hh = t.substring(0, 2).toInt();
