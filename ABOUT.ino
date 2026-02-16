@@ -10,20 +10,34 @@ table, th, td {border: 1px solid blue; width:font-size:12px; background-color: #
 th, td { padding-left: 4px; padding-right: 4px;}
 th {background-color: #22ffb3;}
 body {font-size:12px;} tr {height:26px;} 
+.nav { background: #eee; padding: 10px; }
+.nav a { margin-right: 10px; cursor: pointer; color: blue; text-decoration: none; font-size:20px;}
+.container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+tr {height: 20px;}
+
+.close a {
+color:red; 
+text-decoration: none; 
+float:right;   
+font-size:40px;
+font-weight: bold; 
+} 
+
 </style>
 <script type="text/javascript" src="SECURITY"></script>
 <script> function cl() { window.location.href='/MENU'; }</script>
 </head><body>
-<div id='msect'>
-<div id="menu"><a href="#" class='close' onclick='cl();'>&times;</a></div>
+<div class='container'><div class="nav">
+<span class='close'><a href="/">&times;</a></span>   
+<br><br>
 </div>
 <center>
 <h2>ESP32-SWITCH SYSTEM DATA</h2>
 
 )=====";
 
-void handleAbout(AsyncWebServerRequest *request) {
-char page[1536] = {0};
+void handleAbout() {
+char page[2000] = {0};
 char temp[100]={0};
 strcpy_P(page, ABOUT);
 
@@ -55,12 +69,12 @@ strcpy_P(page, ABOUT);
     strcat(page, temp);
     sprintf(temp, "<tr><td>Free heap<td>%ld bytes</td>", esp_get_free_heap_size() );
     strcat(page, temp);
-    if ( Mqtt_Format != 0 ) { //bool == y en er is een mqtt adres, ja kijk dan of er een sensor is ingesteld
+    if ( settings.Mqtt_Format != 0 ) { //bool == y en er is een mqtt adres, ja kijk dan of er een sensor is ingesteld
      sprintf( temp,"<tr><td>mqtt clientId<td>%ld</td>", getChipId(false).c_str());
      strcat(page, temp);
     // check if connected
     if ( MQTT_Client.connected() ) { //: add a dot
-       sprintf(temp, "<tr><td>mqtt connected<td>%s</td>", Mqtt_Broker );
+       sprintf(temp, "<tr><td>mqtt connected<td>%s</td>", settings.Mqtt_Broker );
        } else {
        sprintf(temp, "<tr><td>mqtt status<td>not connected</td>");
        }
@@ -76,13 +90,13 @@ strcpy_P(page, ABOUT);
    //Serial.println("page = " + String(page));
     //Serial.println("length = " + String(strlen(page)));
 
-    sprintf(temp, "<tr><td>securityLevel<td>%d</td>" , securityLevel );
+    sprintf(temp, "<tr><td>securityLevel<td>%d</td>" , settings.securityLevel );
     strcat(page, temp);
 
 
     //Serial.println("page = " + String(page));
     consoleOut("length = " + String(strlen(page)));
  
-    request->send(200, "text/html", page); //send the html code to the client
+    server.send(200, "text/html", page); //send the html code to the client
     memset(page, 0, sizeof(page));
 }

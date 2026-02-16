@@ -1,29 +1,29 @@
-# ESP32C3-SMART-LIGHT
-This is software for a very smart led controller voice control, built-in timers and dim function. It is meant for 5v led lights, e.g. a ledstrip. You can apply it in many cases.
-For instance, you can wind the strip around a hollow plastic pipe to create a bulb that you can mount in a lantern or armature.
-This way you can have a very intelligent and low-energy garden light that switches on about sunset and goes out at sunrise. 
+# ESP RainMaker Custom Device
 
-Example of an application: I have a ledstip under a piece of furniture in my hallway. The light switches on 10 minutes after sunset, at a high level. After midnight another timer switches it to a low level (and energy) nightlight. 
+This example demonstrates how to build a custom device to be used with ESP RainMaker.
 
-The features it has are:
-- easy to connect to wifi via espressif rainmaker app
-- can be controlled via google home (voice), webui, timers, http and optional button.
-- dimmable by moving a slider in the webui, google home (voice} or via button(optional)
-- 4 timers with advanced options (a.o. own dim level)
-- soft switch on and off
-- simple hardware
-- it has a journal that logs all kinds of events
- 
-  
-## download
-[ESP32-C3-DIMMER-v0_3](https://github.com/patience4711/ESP32C3-SMART-LIGHT/blob/main/ESP32_C3_DIMMER_v0_3.ino.bin)
+## What to expect in this example?
 
+- This example sketch uses the on board Boot button and GPIO16 to demonstrate an ESP RainMaker AC dimmer device.
+- After compiling and flashing the example, add your device using the [ESP RainMaker phone apps](https://rainmaker.espressif.com/docs/quick-links.html#phone-apps) by scanning the QR code.
+- Toggling the state from the phone app will toggle the dimmer state (GPIO16).
+- Pressing the Boot button will toggle the dimmer state (GPIO16) and the same will reflect on the phone app.
+- You can also change the Level from the phone app and see it reflect on the device as a print message.
 
-## hardware
-- esp32c3 super mini
-- a mosfet module
-- 3mm wide ledstrip 5v
-- a 5v power supply
+### Output
 
-![frontpage](https://github.com/user-attachments/assets/ffd2b610-0207-406d-a784-8bd20329a7b8)
-  
+```
+[    87][I][RMaker.cpp:13] event_handler(): RainMaker Initialized.
+[    94][I][WiFiProv.cpp:158] beginProvision(): Already Provisioned
+[    95][I][WiFiProv.cpp:162] beginProvision(): Attempting connect to AP: Viking007_2GEXT
+
+Received value = false for Dimmer - Power
+Toggle State to true.
+[ 22532][I][RMakerDevice.cpp:162] updateAndReportParam(): Device : Dimmer, Param Name : Power, Val : true
+
+Received value = 73 for Dimmer - Level
+```
+
+### Resetting the device
+- Press and Hold the Boot button for more than 3 seconds and then release to reset Wi-Fi configuration.
+- Press and Hold the Boot button for more than 10 seconds and then release to reset to factory defaults.
