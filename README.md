@@ -1,4 +1,4 @@
-This is software for a very smart led controller with built-in timers and dim function. it listens to voice commands via esp-rainmaker and google home. It can also work stand-alone and with its own timekeeping and timers you can make complex automations. It is meant for led lights, e.g. a ledstrip. You can apply it in many cases.
+This is software for a very smart led controller with built-in timers and dim function. It listens to voice commands via esp-rainmaker and google home. It can also work stand-alone and with its own timekeeping and timers you can make complex automations. It is meant for led lights, e.g. a ledstrip. You can apply it in many cases.
 For instance, you can wind the strip around a hollow plastic piece of pipe to create a bulb that you can mount in a lantern or armature.
 This way you can build a very intelligent and low-energy garden lamp that switches on about sunset and goes out at sunrise. 
 
