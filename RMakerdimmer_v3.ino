@@ -26,24 +26,24 @@ void setup() {
   if (!my_device) {
     return;
   }
-  //Create custom dimmer device
+  //Create a custom dimmer device
   my_device = new Device("Dimmer",
                        ESP_RMAKER_DEVICE_LIGHTBULB,
                        &gpio_dimmer);
   
-  // 2. Maak de schat aan (de naam-parameter met WRITE-rechten)
- param_handle_t *custom_name_handle = esp_rmaker_param_create(
-    "Name", 
-    ESP_RMAKER_PARAM_NAME, 
-    esp_rmaker_str("Dimmer"), 
-    PROP_FLAG_READ | PROP_FLAG_WRITE | PROP_FLAG_PERSIST
-);
+    // 2. setup the name-parameter with WRITE-permissions)
+  param_handle_t *custom_name_handle = esp_rmaker_param_create(
+      "Name", 
+      ESP_RMAKER_PARAM_NAME, 
+      esp_rmaker_str("Dimmer"), 
+      PROP_FLAG_READ | PROP_FLAG_WRITE | PROP_FLAG_PERSIST
+  );
 
-// 3. Voeg de parameter toe aan het device via een 'reinterpret_cast'
-// Dit lost de "invalid conversion" error op die je net kreeg
-if (custom_name_handle) {
-    esp_rmaker_device_add_param((esp_rmaker_device_t *)my_device, custom_name_handle);
-}
+  // 3. add the parameter to the device via a 'reinterpret_cast'
+  // this solves the "invalid conversion" error 
+  if (custom_name_handle) {
+      esp_rmaker_device_add_param((esp_rmaker_device_t *)my_device, custom_name_handle);
+  }
 
  
   my_device->addPowerParam(DEFAULT_POWER_MODE);
