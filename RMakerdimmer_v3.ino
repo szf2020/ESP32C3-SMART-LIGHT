@@ -30,7 +30,22 @@ void setup() {
   my_device = new Device("Dimmer",
                        ESP_RMAKER_DEVICE_LIGHTBULB,
                        &gpio_dimmer);
-  //my_device->addNameParam();
+  
+  // 2. Maak de schat aan (de naam-parameter met WRITE-rechten)
+ param_handle_t *custom_name_handle = esp_rmaker_param_create(
+    "Name", 
+    ESP_RMAKER_PARAM_NAME, 
+    esp_rmaker_str("Dimmer"), 
+    PROP_FLAG_READ | PROP_FLAG_WRITE | PROP_FLAG_PERSIST
+);
+
+// 3. Voeg de parameter toe aan het device via een 'reinterpret_cast'
+// Dit lost de "invalid conversion" error op die je net kreeg
+if (custom_name_handle) {
+    esp_rmaker_device_add_param((esp_rmaker_device_t *)my_device, custom_name_handle);
+}
+
+ 
   my_device->addPowerParam(DEFAULT_POWER_MODE);
   my_device->assignPrimaryParam(my_device->getParamByName(ESP_RMAKER_DEF_POWER_NAME));
   //Create and add a custom Brightness parameter
@@ -42,6 +57,8 @@ void setup() {
   brightness.addBounds(value(0), value(100), value(1));
   brightness.addUIType(ESP_RMAKER_UI_SLIDER);
   my_device->addParam(brightness);
+  
+  
   
   // //Create and add a custom level parameter
   // Param level_param("Level", "custom.param.level", value(DEFAULT_DIMMER_LEVEL), PROP_FLAG_READ | PROP_FLAG_WRITE);
